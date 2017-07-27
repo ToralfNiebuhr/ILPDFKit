@@ -75,6 +75,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong, nullable) NSString *value;
 
+/** The signong image of the form.
+ */
+@property (nonatomic, strong, nullable) UIImage *image;
+
 /** The page number on which the form appears. The first page has value 1.
  */
 @property (nonatomic, readonly) NSUInteger page;
