@@ -267,7 +267,15 @@
 #pragma mark - Rendering
 
 - (void)vectorRenderInPDFContext:(CGContextRef)ctx forRect:(CGRect)rect {
-    if (self.formType == ILPDFFormTypeText || self.formType == ILPDFFormTypeChoice) {
+    if (self.formType == ILPDFFormTypeSignature) {
+        if (self.image != nil) {
+            CGContextTranslateCTM(ctx, 0, rect.size.height);
+            CGContextScaleCTM(ctx, 1.0, -1.0);
+            CGContextDrawImage(ctx, CGRectMake(0, 0, rect.size.width,rect.size.height), (self.image).CGImage);
+            CGContextScaleCTM(ctx, 1.0, -1.0);
+            CGContextTranslateCTM(ctx, 0, -rect.size.height);
+        }
+    } else if (self.formType == ILPDFFormTypeText || self.formType == ILPDFFormTypeChoice) {
         NSString *text = self.value;
         UIFont *font = [UIFont systemFontOfSize:[ILPDFWidgetAnnotationView fontSizeForRect:rect value:self.value multiline:((_flags & ILPDFFormFlagTextFieldMultiline) > 0 && self.formType == ILPDFFormTypeText) choice:self.formType == ILPDFFormTypeChoice]];
         UIGraphicsPushContext(ctx);
@@ -277,7 +285,7 @@
         [text drawInRect:CGRectMake(0, 0, rect.size.width, rect.size.height*2.0) withAttributes:@{NSFontAttributeName:font,NSParagraphStyleAttributeName: paragraphStyle}];
         UIGraphicsPopContext();
     } else if (self.formType == ILPDFFormTypeButton) {
-       [ILPDFFormButtonField drawWithRect:rect context:ctx back:NO selected:[self.value isEqualToString:self.exportValue] && (_flags & ILPDFFormFlagButtonPushButton) == 0 radio:(_flags & ILPDFFormFlagButtonRadio) > 0];
+        [ILPDFFormButtonField drawWithRect:rect context:ctx back:NO selected:[self.value isEqualToString:self.exportValue] && (_flags & ILPDFFormFlagButtonPushButton) == 0 radio:(_flags & ILPDFFormFlagButtonRadio) > 0];
     }
 }
 
