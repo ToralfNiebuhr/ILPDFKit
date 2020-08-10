@@ -23,7 +23,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ILPDFFormButtonField.h"
 #import "ILPDFFormContainer.h"
-#import <ILPDFKit/ILPDFKit.h>
+#import "ILPDFView.h"
+#import "ILPDFDictionary.h"
+#import "ILPDFString.h"
+#import "ILPDFArray.h"
+#import "ILPDFDocument.h"
 
 static NSString *const ILPDFPageViewWebKitIdentifier = @"UIPDFPageView";
 static NSString *const ILPDFContainerViewWebKitIdentifier = @"WKPDFView";
@@ -209,7 +213,7 @@ static NSString *const ILPDFCharEncoding = @"NSASCIIStringEncoding";
 
 - (void)fadeInWidgetAnnotations {
     [UIView animateWithDuration:0.5 delay:0.2 options:0 animations:^{
-        for (UIView *v in _pdfWidgetAnnotationViews) v.alpha = 1;
+        for (UIView *v in self->_pdfWidgetAnnotationViews) v.alpha = 1;
     } completion:^(BOOL finished) {}];
 }
 
